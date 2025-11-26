@@ -424,12 +424,20 @@
         const lines = text.split(/\r?\n/).filter((l) => l.trim());
         if (!lines.length) return [];
         const header = lines[0].split("\t");
-        return lines.slice(1).map((line) => {
-          const cells = line.split("\t");
+        const rows = [];
+        for (let i = 1; i < lines.length; i++) {
+          const cells = lines[i].split("\t");
           const obj = {};
-          header.forEach((k, i) => (obj[k] = cells[i] ?? ""));
-          return obj;
-        });
+          header.forEach((k, idx) => (obj[k] = cells[idx] ?? ""));
+          // Stop if we hit the end marker
+          if (
+            (obj[COLS.name] || "").trim().toLowerCase() === "pokemon-list-end"
+          ) {
+            break;
+          }
+          rows.push(obj);
+        }
+        return rows;
       }
 
       function parsePrice(str) {
