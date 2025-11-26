@@ -410,7 +410,9 @@
       }
 
       lightbox.onclick = closeLightbox;
-      document.onkeydown = (e) => e.key === "Escape" && closeLightbox();
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLightbox();
+      });
 
       async function fetchData() {
         const res = await fetch(
