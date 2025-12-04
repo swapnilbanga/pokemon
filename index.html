@@ -146,46 +146,40 @@
         transform: translateY(-2px);
       }
 
-      /* Featured card ribbon */
-      .card.card-featured {
-        padding-bottom: 1.5rem;
+      .card-tag-row {
+        margin-bottom: 0.1rem;
       }
 
-      .card.card-featured::after {
-        content: "★ Featured";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #f59e0b;
-        color: #fff;
+      /* Featured tag */
+      .tag-featured {
+        background: #dbeafe;
+        color: #1d4ed8;
         font-size: 0.6rem;
-        font-weight: 700;
-        padding: 0.3rem 0.5rem;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
+        font-weight: 600;
+        padding: 0.2rem 0.45rem;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        line-height: 1;
       }
 
-      /* Sale card ribbon */
-      .card.card-sale {
-        padding-bottom: 1.5rem;
+      .tag-featured::before {
+        content: "★";
+        font-size: 0.5rem;
       }
 
-      .card.card-sale::after {
-        content: "On Sale";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #dc2626;
-        color: #fff;
+      /* Sale tag */
+      .tag-sale {
+        background: #fee2e2;
+        color: #dc2626;
         font-size: 0.6rem;
-        font-weight: 700;
-        padding: 0.3rem 0.5rem;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
+        font-weight: 600;
+        padding: 0.2rem 0.45rem;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        line-height: 1;
       }
 
       .card-img {
@@ -609,10 +603,8 @@
         );
 
         if (sortDir) {
+          // When user explicitly sorts by price, ignore tags
           filtered.sort((a, b) => {
-            const ta = getTagRank(a.tag);
-            const tb = getTagRank(b.tag);
-            if (ta !== tb) return ta - tb;
             const pa = getLowestPrice(a),
               pb = getLowestPrice(b);
             if (pa === null && pb === null) return 0;
@@ -621,6 +613,7 @@
             return sortDir === "asc" ? pa - pb : pb - pa;
           });
         } else {
+          // Default sort: Featured/Sale first, then by original order
           filtered.sort((a, b) => {
             const ta = getTagRank(a.tag);
             const tb = getTagRank(b.tag);
@@ -670,11 +663,13 @@
             )}</span>`
           );
 
-        let cardClass = "card";
+        let tagHtml = "";
         if (item.tag) {
           const lower = String(item.tag).trim().toLowerCase();
-          if (lower === "featured") cardClass += " card-featured";
-          else if (lower === "sale") cardClass += " card-sale";
+          if (lower === "featured")
+            tagHtml = `<span class="tag-featured">Featured</span>`;
+          else if (lower === "sale")
+            tagHtml = `<span class="tag-sale">Sale</span>`;
         }
 
         const hasImg = !!item.reference;
@@ -683,7 +678,7 @@
           : "No image";
 
         return `
-          <article class="${cardClass}">
+          <article class="card">
             <div class="card-img" ${
               hasImg
                 ? `data-src="${item.reference}" data-title="${item.name}"`
@@ -705,6 +700,7 @@
                     : ""
                 }
               </div>
+              ${tagHtml ? `<div class="card-tag-row">${tagHtml}</div>` : ""}
               <div class="prices">${
                 prices.length
                   ? prices.join("")
