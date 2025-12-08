@@ -182,6 +182,60 @@
         line-height: 1;
       }
 
+      /* Rare tag */
+      .tag-rare {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 600;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        line-height: 1;
+        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
+      }
+
+      .tag-rare::before {
+        content: "✦";
+        font-size: 0.5rem;
+      }
+
+      /* Sold Out card styling */
+      .card.card-soldout {
+        opacity: 0.6;
+      }
+
+      .card.card-soldout:hover {
+        opacity: 0.8;
+        transform: none;
+      }
+
+      .card.card-soldout .card-img {
+        position: relative;
+      }
+
+      .card.card-soldout .card-img img {
+        filter: grayscale(70%);
+      }
+
+      .card.card-soldout .card-img::after {
+        content: "SOLD OUT";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-15deg);
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.4rem 1rem;
+        border-radius: 4px;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+      }
+
       .card-img {
         width: 100%;
         height: 180px;
@@ -576,11 +630,13 @@
       }
 
       function getTagRank(tag) {
-        if (!tag) return 2;
-        const t = String(tag).toLowerCase();
+        if (!tag) return 3;
+        const t = String(tag).toLowerCase().replace(/\s+/g, "");
         if (t === "featured") return 0;
         if (t === "sale") return 1;
-        return 2;
+        if (t === "rare") return 2;
+        if (t === "soldout") return 99;
+        return 3;
       }
 
       function buildRegions(items) {
@@ -664,12 +720,21 @@
           );
 
         let tagHtml = "";
+        let isSoldOut = false;
         if (item.tag) {
-          const lower = String(item.tag).trim().toLowerCase();
+          const lower = String(item.tag)
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "");
           if (lower === "featured")
             tagHtml = `<span class="tag-featured">Featured</span>`;
           else if (lower === "sale")
             tagHtml = `<span class="tag-sale">Sale</span>`;
+          else if (lower === "rare")
+            tagHtml = `<span class="tag-rare">Rare</span>`;
+          else if (lower === "soldout") {
+            isSoldOut = true;
+          }
         }
 
         const hasImg = !!item.reference;
@@ -678,7 +743,7 @@
           : "No image";
 
         return `
-          <article class="card">
+          <article class="card${isSoldOut ? " card-soldout" : ""}">
             <div class="card-img" ${
               hasImg
                 ? `data-src="${item.reference}" data-title="${item.name}"`
