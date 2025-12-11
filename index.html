@@ -316,7 +316,7 @@
         background: #fef2f2;
         color: #dc2626;
       }
-      .price-tag.open {
+      .price-tag.loose {
         background: #fefce8;
         color: #ca8a04;
       }
@@ -324,9 +324,13 @@
         background: #f5f3ff;
         color: #7c3aed;
       }
-      .price-tag.boxed {
+      .price-tag.box-opened {
         background: #f0fdf4;
         color: #16a34a;
+      }
+      .price-tag.box-unopened {
+        background: #ecfdf5;
+        color: #059669;
       }
       .price-tag.none {
         background: #f9fafb;
@@ -525,9 +529,10 @@
       const COLS = {
         name: "Pokemon",
         noBase: "No Base",
-        open: "Open",
+        loose: "Loose",
         sealed: "Sealed (inner bag)",
-        boxed: "Boxed",
+        boxOpened: "Box (opened)",
+        boxUnopened: "Box (unopened)",
         notes: "Notes",
         reference: "Reference",
         region: "Region",
@@ -606,7 +611,13 @@
       }
 
       function getLowestPrice(item) {
-        const prices = [item.noBase, item.open, item.sealed, item.boxed]
+        const prices = [
+          item.noBase,
+          item.loose,
+          item.sealed,
+          item.boxOpened,
+          item.boxUnopened,
+        ]
           .map(parsePrice)
           .filter((p) => p !== null);
         return prices.length ? Math.min(...prices) : null;
@@ -619,9 +630,10 @@
           number: itemNumber,
           name,
           noBase: (row[COLS.noBase] || "").trim(),
-          open: (row[COLS.open] || "").trim(),
+          loose: (row[COLS.loose] || "").trim(),
           sealed: (row[COLS.sealed] || "").trim(),
-          boxed: (row[COLS.boxed] || "").trim(),
+          boxOpened: (row[COLS.boxOpened] || "").trim(),
+          boxUnopened: (row[COLS.boxUnopened] || "").trim(),
           notes: (row[COLS.notes] || "").trim(),
           reference: (row[COLS.reference] || "").trim(),
           region: (row[COLS.region] || "").trim(),
@@ -700,10 +712,10 @@
               item.noBase
             )}</span>`
           );
-        if (item.open)
+        if (item.loose)
           prices.push(
-            `<span class="price-tag open"><b>Open:</b> ${formatPrice(
-              item.open
+            `<span class="price-tag loose"><b>Loose:</b> ${formatPrice(
+              item.loose
             )}</span>`
           );
         if (item.sealed)
@@ -712,10 +724,16 @@
               item.sealed
             )}</span>`
           );
-        if (item.boxed)
+        if (item.boxOpened)
           prices.push(
-            `<span class="price-tag boxed"><b>Boxed:</b> ${formatPrice(
-              item.boxed
+            `<span class="price-tag box-opened"><b>Box (opened):</b> ${formatPrice(
+              item.boxOpened
+            )}</span>`
+          );
+        if (item.boxUnopened)
+          prices.push(
+            `<span class="price-tag box-unopened"><b>Box (unopened):</b> ${formatPrice(
+              item.boxUnopened
             )}</span>`
           );
 
