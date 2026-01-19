@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Pokémon Price List</title>
+    <title>Catalogues - The Kraken Vault</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,801 +19,145 @@
 
       body {
         font-family: "DM Sans", system-ui, -apple-system, sans-serif;
-        background: #f5f7fa;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: #1a1a2e;
         line-height: 1.5;
-      }
-
-      .banner {
-        background: #fffbeb;
-        color: #92400e;
-        padding: 0.6rem 1.5rem;
-        border-bottom: 1px solid #fde68a;
-        font-size: 0.85rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-weight: 500;
-      }
-
-      .banner a {
-        color: #d97706;
-        font-weight: 600;
-        text-decoration: none;
-        border-bottom: 1px solid currentColor;
-        transition: opacity 0.15s;
-      }
-
-      .banner a:hover {
-        opacity: 0.7;
-      }
-
-      .layout {
-        display: flex;
         min-height: 100vh;
-      }
-
-      .sidebar {
-        width: 200px;
-        flex-shrink: 0;
-        background: #fff;
-        border-right: 1px solid #e5e7eb;
-        padding: 1.25rem;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        overflow-y: auto;
-      }
-
-      .sidebar h1 {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #dc2626;
-        margin-bottom: 1.5rem;
-        letter-spacing: -0.01em;
-      }
-
-      .sidebar .field {
-        margin-bottom: 1.1rem;
-      }
-
-      .sidebar label {
-        display: block;
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: #6b7280;
-        margin-bottom: 0.35rem;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
-
-      .sidebar input,
-      .sidebar select {
-        width: 100%;
-        padding: 0.55rem 0.65rem;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        font-family: inherit;
-        background: #f9fafb;
-        color: #1f2937;
-        transition: border-color 0.15s, box-shadow 0.15s;
-      }
-
-      .sidebar input:focus,
-      .sidebar select:focus {
-        outline: none;
-        border-color: #dc2626;
-        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        background: #fff;
-      }
-
-      .sidebar .status {
-        font-size: 0.8rem;
-        color: #6b7280;
-        margin-top: 1.25rem;
-        padding-top: 1rem;
-        border-top: 1px solid #f3f4f6;
-      }
-
-      .main {
-        flex: 1;
-        padding: 1.75rem;
-        overflow-y: auto;
-        background: #f5f7fa;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 1.25rem;
-      }
-
-      .card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
-        position: relative;
-      }
-
-      .card:hover {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        transform: translateY(-2px);
-      }
-
-      .card-tag-row {
-        margin-bottom: 0.1rem;
-      }
-
-      /* Featured tag */
-      .tag-featured {
-        background: #dbeafe;
-        color: #1d4ed8;
-        font-size: 0.6rem;
-        font-weight: 600;
-        padding: 0.2rem 0.45rem;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.2rem;
-        line-height: 1;
-      }
-
-      .tag-featured::before {
-        content: "★";
-        font-size: 0.5rem;
-      }
-
-      /* Sale tag */
-      .tag-sale {
-        background: #fee2e2;
-        color: #dc2626;
-        font-size: 0.6rem;
-        font-weight: 600;
-        padding: 0.2rem 0.45rem;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        line-height: 1;
-      }
-
-      /* Rare tag */
-      .tag-rare {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #fff;
-        font-size: 0.6rem;
-        font-weight: 600;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.2rem;
-        line-height: 1;
-        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
-      }
-
-      .tag-rare::before {
-        content: "✦";
-        font-size: 0.5rem;
-      }
-
-      /* Sold Out card styling */
-      .card.card-soldout {
-        opacity: 0.6;
-      }
-
-      .card.card-soldout:hover {
-        opacity: 0.8;
-        transform: none;
-      }
-
-      .card.card-soldout .card-img {
-        position: relative;
-      }
-
-      .card.card-soldout .card-img img {
-        filter: grayscale(70%);
-      }
-
-      .card.card-soldout .card-img::after {
-        content: "SOLD OUT";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-15deg);
-        background: rgba(0, 0, 0, 0.75);
-        color: #fff;
-        font-size: 0.7rem;
-        font-weight: 700;
-        padding: 0.4rem 1rem;
-        border-radius: 4px;
-        letter-spacing: 0.1em;
-        white-space: nowrap;
-      }
-
-      .card-img {
-        width: 100%;
-        height: 180px;
-        background: #f9fafb;
-        border-bottom: 1px solid #f3f4f6;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9ca3af;
-        font-size: 0.75rem;
-        cursor: pointer;
+        padding: 2rem;
       }
 
-      .card-img img {
+      .container {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 3rem;
+        max-width: 600px;
         width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transition: transform 0.2s ease;
-      }
-
-      .card:hover .card-img img {
-        transform: scale(1.02);
-      }
-
-      .card-body {
-        padding: 0.9rem 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .card-title-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.4rem;
-        min-width: 0;
-      }
-
-      .card-number {
-        font-size: 0.65rem;
-        font-weight: 600;
-        color: #6b7280;
-        background: #f3f4f6;
-        border-radius: 4px;
-        padding: 0.15rem 0.4rem;
-        flex-shrink: 0;
-      }
-
-      .card-title {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #111827;
-        white-space: normal;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.35;
-      }
-
-      .prices {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.3rem;
-        margin-top: 0.15rem;
-      }
-
-      .price-tag {
-        font-size: 0.68rem;
-        padding: 0.2rem 0.45rem;
-        border-radius: 5px;
-        font-weight: 600;
-        font-family: system-ui, -apple-system, sans-serif;
-      }
-
-      .price-tag.no-base {
-        background: #fef2f2;
-        color: #dc2626;
-      }
-      .price-tag.loose {
-        background: #fefce8;
-        color: #ca8a04;
-      }
-      .price-tag.sealed {
-        background: #f5f3ff;
-        color: #7c3aed;
-      }
-      .price-tag.box-opened {
-        background: #f0fdf4;
-        color: #16a34a;
-      }
-      .price-tag.box-unopened {
-        background: #ecfdf5;
-        color: #059669;
-      }
-      .price-tag.none {
-        background: #f9fafb;
-        color: #9ca3af;
-      }
-
-      .region-tag {
-        background: #f3f4f6;
-        color: #6b7280;
-        font-size: 0.55rem;
-        font-weight: 600;
-        padding: 0.15rem 0.4rem;
-        border-radius: 4px;
-        flex-shrink: 0;
-        margin-left: auto;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-      }
-
-      .notes {
-        font-size: 0.7rem;
-        color: #6b7280;
-        line-height: 1.4;
-        margin-top: 0.1rem;
-        font-style: italic;
-      }
-
-      .empty {
-        padding: 3rem 2rem;
         text-align: center;
-        color: #9ca3af;
-        grid-column: 1 / -1;
-        font-size: 0.95rem;
       }
 
-      /* Lightbox */
-      .lightbox {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(17, 24, 39, 0.9);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-        cursor: zoom-out;
-        backdrop-filter: blur(4px);
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
       }
 
-      .lightbox.open {
+      .subtitle {
+        font-size: 1.1rem;
+        color: #6b7280;
+        margin-bottom: 2.5rem;
+      }
+
+      .catalogues {
         display: flex;
+        flex-direction: column;
+        gap: 1rem;
       }
 
-      .lightbox img {
-        max-width: 90%;
-        max-height: 85%;
-        object-fit: contain;
+      .catalogue-card {
+        display: block;
+        background: #f9fafb;
+        border: 2px solid #e5e7eb;
         border-radius: 12px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s ease;
+        text-align: left;
       }
 
-      .lightbox-close {
-        position: absolute;
-        top: 1.25rem;
-        right: 1.5rem;
-        color: #fff;
-        font-size: 1.75rem;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: opacity 0.15s;
+      .catalogue-card:hover {
+        border-color: #667eea;
+        background: #f5f3ff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
       }
 
-      .lightbox-close:hover {
-        opacity: 1;
+      .catalogue-card h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
       }
 
-      .lightbox-title {
-        position: absolute;
-        bottom: 1.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #fff;
-        font-size: 0.9rem;
-        background: rgba(0, 0, 0, 0.6);
-        padding: 0.6rem 1.25rem;
-        border-radius: 8px;
+      .catalogue-card p {
+        font-size: 0.95rem;
+        color: #6b7280;
+        margin: 0;
+      }
+
+      .footer {
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e5e7eb;
+        font-size: 0.85rem;
+        color: #9ca3af;
+      }
+
+      .footer a {
+        color: #667eea;
+        text-decoration: none;
         font-weight: 500;
       }
 
-      @media (max-width: 1100px) {
-        .grid {
-          grid-template-columns: repeat(4, 1fr);
-        }
+      .footer a:hover {
+        text-decoration: underline;
       }
 
-      @media (max-width: 900px) {
-        .grid {
-          grid-template-columns: repeat(3, 1fr);
+      @media (max-width: 640px) {
+        .container {
+          padding: 2rem 1.5rem;
         }
-      }
 
-      @media (max-width: 700px) {
-        .layout {
-          flex-direction: column;
+        h1 {
+          font-size: 2rem;
         }
-        .sidebar {
-          width: 100%;
-          height: auto;
-          position: static;
-          border-right: none;
-          border-bottom: 1px solid #e5e5e5;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-          align-items: center;
-        }
-        .sidebar h1 {
-          margin-bottom: 0;
-          margin-right: 1rem;
-        }
-        .sidebar .field {
-          margin-bottom: 0;
-        }
-        .sidebar input,
-        .sidebar select {
-          width: auto;
-          min-width: 120px;
-        }
-        .sidebar .status {
-          border: none;
-          padding: 0;
-          margin: 0;
-        }
-        .grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
 
-      @media (max-width: 480px) {
-        .grid {
-          grid-template-columns: 1fr;
+        .catalogue-card {
+          padding: 1.25rem;
+        }
+
+        .catalogue-card h2 {
+          font-size: 1.25rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="banner">
-      Please read the&nbsp;
-      <a href="guidelines.html">ordering guidelines</a>&nbsp;before placing an
-      order.&nbsp;More about&nbsp;
-      <a href="about-scale-world.html">Bandai Scale World</a>.
+    <div class="container">
+      <h1>The Kraken Vault</h1>
+      <p class="subtitle">Browse our collection catalogues</p>
+
+      <div class="catalogues">
+        <a href="/pokemon" class="catalogue-card">
+          <h2>Pokémon Scale World</h2>
+          <p>Authentic Bandai Scale World 1/20 figures from Japan</p>
+        </a>
+      </div>
+
+      <div class="footer">
+        <p>
+          Questions? Reach out on
+          <a
+            href="https://www.instagram.com/the_kraken_vault/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          or
+          <a
+            href="https://wa.me/917015350226"
+            target="_blank"
+            rel="noopener noreferrer"
+            >WhatsApp</a
+          >
+        </p>
+      </div>
     </div>
-    <div class="layout">
-      <aside class="sidebar">
-        <h1>Pokémon Prices</h1>
-        <div class="field">
-          <label>Search</label>
-          <input id="search" type="text" placeholder="Name…" />
-        </div>
-        <div class="field">
-          <label>Region</label>
-          <select id="region">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Sort</label>
-          <select id="sort">
-            <option value="">Default</option>
-            <option value="asc">Price ↑</option>
-            <option value="desc">Price ↓</option>
-          </select>
-        </div>
-        <div class="status" id="status">Loading…</div>
-        <div class="status">
-          <strong>Prices can change without notice.</strong>
-        </div>
-      </aside>
-
-      <main class="main">
-        <div class="grid" id="grid"></div>
-      </main>
-    </div>
-
-    <div class="lightbox" id="lightbox">
-      <span class="lightbox-close">&times;</span>
-      <img id="lightbox-img" src="" alt="" />
-      <div class="lightbox-title" id="lightbox-title"></div>
-    </div>
-
-    <script>
-      const SHEET_ID = "10Xnrhl0Fp0N7oGDCaDprOuYrmrlPy4LPKN8Akpr393U";
-      const GID = "0";
-      const COLS = {
-        name: "Pokemon",
-        noBase: "No Base",
-        loose: "Loose",
-        sealed: "Sealed (inner bag)",
-        boxOpened: "Box (opened)",
-        boxUnopened: "Box (unopened)",
-        notes: "Notes",
-        reference: "Reference",
-        region: "Region",
-        tag: "Tag",
-      };
-
-      let allItems = [],
-        filtered = [];
-      const $ = (id) => document.getElementById(id);
-      const grid = $("grid"),
-        status = $("status");
-      const searchEl = $("search"),
-        regionEl = $("region"),
-        sortEl = $("sort");
-      const lightbox = $("lightbox"),
-        lightboxImg = $("lightbox-img"),
-        lightboxTitle = $("lightbox-title");
-
-      function openLightbox(src, title) {
-        lightboxImg.src = src;
-        lightboxTitle.textContent = title;
-        lightbox.classList.add("open");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeLightbox() {
-        lightbox.classList.remove("open");
-        document.body.style.overflow = "";
-      }
-
-      lightbox.onclick = closeLightbox;
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeLightbox();
-      });
-
-      async function fetchData() {
-        const res = await fetch(
-          `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=tsv&gid=${GID}`
-        );
-        if (!res.ok) throw new Error(res.status);
-        return res.text();
-      }
-
-      function parseTSV(text) {
-        const lines = text.split(/\r?\n/).filter((l) => l.trim());
-        if (!lines.length) return [];
-        const header = lines[0].split("\t");
-        const rows = [];
-        for (let i = 1; i < lines.length; i++) {
-          const cells = lines[i].split("\t");
-          const obj = {};
-          header.forEach((k, idx) => (obj[k] = cells[idx] ?? ""));
-          // Stop if we hit the end marker
-          if (
-            (obj[COLS.name] || "").trim().toLowerCase() === "pokemon-list-end"
-          ) {
-            break;
-          }
-          rows.push(obj);
-        }
-        return rows;
-      }
-
-      function parsePrice(str) {
-        if (!str) return null;
-        const num = parseFloat(str.replace(/[^0-9.]/g, ""));
-        return isNaN(num) ? null : num;
-      }
-
-      function formatPrice(str) {
-        if (!str) return "";
-        const trimmed = String(str).trim();
-        if (!trimmed) return "";
-        if (trimmed.startsWith("₹")) return trimmed;
-        return "₹" + trimmed;
-      }
-
-      function getLowestPrice(item) {
-        const prices = [
-          item.noBase,
-          item.loose,
-          item.sealed,
-          item.boxOpened,
-          item.boxUnopened,
-        ]
-          .map(parsePrice)
-          .filter((p) => p !== null);
-        return prices.length ? Math.min(...prices) : null;
-      }
-
-      function normalize(row, itemNumber) {
-        const name = (row[COLS.name] || "").trim();
-        if (!name) return null;
-        return {
-          number: itemNumber,
-          name,
-          noBase: (row[COLS.noBase] || "").trim(),
-          loose: (row[COLS.loose] || "").trim(),
-          sealed: (row[COLS.sealed] || "").trim(),
-          boxOpened: (row[COLS.boxOpened] || "").trim(),
-          boxUnopened: (row[COLS.boxUnopened] || "").trim(),
-          notes: (row[COLS.notes] || "").trim(),
-          reference: (row[COLS.reference] || "").trim(),
-          region: (row[COLS.region] || "").trim(),
-          tag: (row[COLS.tag] || "").trim(),
-        };
-      }
-
-      function getTagRank(tag) {
-        if (!tag) return 3;
-        const t = String(tag).toLowerCase().replace(/\s+/g, "");
-        if (t === "featured") return 0;
-        if (t === "sale") return 1;
-        if (t === "rare") return 2;
-        if (t === "soldout") return 99;
-        return 3;
-      }
-
-      function buildRegions(items) {
-        const regions = [
-          ...new Set(items.map((i) => i.region).filter(Boolean)),
-        ].sort();
-        regionEl.innerHTML =
-          '<option value="">All</option>' +
-          regions.map((r) => `<option value="${r}">${r}</option>`).join("");
-      }
-
-      function filter() {
-        const q = searchEl.value.toLowerCase().trim();
-        const r = regionEl.value;
-        const sortDir = sortEl.value;
-
-        filtered = allItems.filter(
-          (i) =>
-            (!q || i.name.toLowerCase().includes(q)) && (!r || i.region === r)
-        );
-
-        if (sortDir) {
-          // When user explicitly sorts by price, ignore tags
-          filtered.sort((a, b) => {
-            const pa = getLowestPrice(a),
-              pb = getLowestPrice(b);
-            if (pa === null && pb === null) return 0;
-            if (pa === null) return 1;
-            if (pb === null) return -1;
-            return sortDir === "asc" ? pa - pb : pb - pa;
-          });
-        } else {
-          // Default sort: Featured/Sale first, then by original order
-          filtered.sort((a, b) => {
-            const ta = getTagRank(a.tag);
-            const tb = getTagRank(b.tag);
-            if (ta !== tb) return ta - tb;
-            return (a.number || 0) - (b.number || 0);
-          });
-        }
-        render();
-      }
-
-      function render() {
-        status.textContent = `${filtered.length} items`;
-        if (!filtered.length) {
-          grid.innerHTML = '<div class="empty">No results</div>';
-          return;
-        }
-        grid.innerHTML = filtered.map(renderCard).join("");
-        grid.querySelectorAll(".card-img[data-src]").forEach((el) => {
-          el.onclick = () => openLightbox(el.dataset.src, el.dataset.title);
-        });
-      }
-
-      function renderCard(item) {
-        const prices = [];
-        if (item.noBase)
-          prices.push(
-            `<span class="price-tag no-base"><b>No Base:</b> ${formatPrice(
-              item.noBase
-            )}</span>`
-          );
-        if (item.loose)
-          prices.push(
-            `<span class="price-tag loose"><b>Loose:</b> ${formatPrice(
-              item.loose
-            )}</span>`
-          );
-        if (item.sealed)
-          prices.push(
-            `<span class="price-tag sealed"><b>Sealed:</b> ${formatPrice(
-              item.sealed
-            )}</span>`
-          );
-        if (item.boxOpened)
-          prices.push(
-            `<span class="price-tag box-opened"><b>Box (opened):</b> ${formatPrice(
-              item.boxOpened
-            )}</span>`
-          );
-        if (item.boxUnopened)
-          prices.push(
-            `<span class="price-tag box-unopened"><b>Box (unopened):</b> ${formatPrice(
-              item.boxUnopened
-            )}</span>`
-          );
-
-        let tagHtml = "";
-        let isSoldOut = false;
-        if (item.tag) {
-          const lower = String(item.tag)
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, "");
-          if (lower === "featured")
-            tagHtml = `<span class="tag-featured">Featured</span>`;
-          else if (lower === "sale")
-            tagHtml = `<span class="tag-sale">Sale</span>`;
-          else if (lower === "rare")
-            tagHtml = `<span class="tag-rare">Rare</span>`;
-          else if (lower === "soldout") {
-            isSoldOut = true;
-          }
-        }
-
-        const hasImg = !!item.reference;
-        const imgHtml = hasImg
-          ? `<img src="${item.reference}" alt="${item.name}" loading="lazy" onerror="this.parentElement.removeAttribute('data-src');this.parentElement.textContent='No image'">`
-          : "No image";
-
-        return `
-          <article class="card${isSoldOut ? " card-soldout" : ""}">
-            <div class="card-img" ${
-              hasImg
-                ? `data-src="${item.reference}" data-title="${item.name}"`
-                : ""
-            }>${imgHtml}</div>
-            <div class="card-body">
-              <div class="card-title-row">
-                ${
-                  typeof item.number === "number"
-                    ? `<span class="card-number">#${String(
-                        item.number
-                      ).padStart(3, "0")}</span>`
-                    : ""
-                }
-                <div class="card-title" title="${item.name}">${item.name}</div>
-                ${
-                  item.region
-                    ? `<span class="region-tag">${item.region}</span>`
-                    : ""
-                }
-              </div>
-              ${tagHtml ? `<div class="card-tag-row">${tagHtml}</div>` : ""}
-              <div class="prices">${
-                prices.length
-                  ? prices.join("")
-                  : '<span class="price-tag none">—</span>'
-              }</div>
-              ${item.notes ? `<div class="notes">${item.notes}</div>` : ""}
-            </div>
-          </article>
-        `;
-      }
-
-      async function init() {
-        try {
-          const tsv = await fetchData();
-          allItems = parseTSV(tsv)
-            .map((row, idx) => normalize(row, idx + 1))
-            .filter(Boolean);
-          buildRegions(allItems);
-          filtered = allItems.slice();
-          filter();
-        } catch (e) {
-          console.error(e);
-          status.innerHTML = '<span style="color:#c62828">Error</span>';
-        }
-      }
-
-      searchEl.oninput = filter;
-      regionEl.onchange = filter;
-      sortEl.onchange = filter;
-      init();
-    </script>
   </body>
 </html>

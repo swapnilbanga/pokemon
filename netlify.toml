@@ -1,20 +1,18 @@
 [build]
   publish = "."
 
-# Rewrite /pokemon to serve index.html
+# Serve /pokemon from pokemon folder
 [[redirects]]
   from = "/pokemon"
-  to = "/index.html"
+  to = "/pokemon/index.html"
   status = 200
 
-# Rewrite /pokemon/ to serve index.html
 [[redirects]]
   from = "/pokemon/"
-  to = "/index.html"
+  to = "/pokemon/index.html"
   status = 200
 
-# Rewrite /pokemon/* to serve files from root
 [[redirects]]
   from = "/pokemon/*"
-  to = "/:splat"
+  to = "/pokemon/:splat"
   status = 200
