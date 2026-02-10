@@ -35,10 +35,19 @@
       .banner {
         background: #fffbeb;
         color: #92400e;
-        padding: 0.75rem 1.25rem;
+        padding: 0.85rem 1.5rem;
         border-bottom: 1px solid #fde68a;
         font-size: 0.9rem;
         text-align: center;
+      }
+
+      .banner-title {
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.15rem;
+      }
+
+      .banner-sub {
         font-weight: 500;
         line-height: 1.4;
       }
@@ -147,6 +156,25 @@
         margin-top: 1.25rem;
         padding-top: 1rem;
         border-top: 1px solid #f3f4f6;
+      }
+
+      .sidebar .status-cta {
+        margin-top: 1.25rem;
+        font-size: 0.85rem;
+        color: #4b5563;
+      }
+
+      .sidebar .status-cta strong {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+        color: #111827;
+      }
+
+      .sidebar .status-cta p {
+        margin: 0;
+        line-height: 1.5;
       }
 
       .main {
@@ -513,32 +541,13 @@
   </head>
   <body>
     <div class="banner">
-      Reach out to us on
-      <a
-        href="https://www.instagram.com/the_kraken_vault/"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Instagram</a
-      >
-      or
-      <a
-        href="https://wa.me/917015350226"
-        target="_blank"
-        rel="noopener noreferrer"
-        >WhatsApp</a
-      >
-      to place an order. Join our
-      <a
-        href="https://chat.whatsapp.com/JuTIn09PMvO3tYndhq9HWz"
-        target="_blank"
-        rel="noopener noreferrer"
-        >community</a
-      >
-      for news and offers.
+      <div class="banner-title">
+        Officially licensed Bandai Scale World 1/20 Pokémon
+      </div>
+      <!-- Subtitle intentionally left out; details are in the sidebar "How to order" block -->
     </div>
     <div class="layout">
       <aside class="sidebar">
-        <h1>Pokémon Prices</h1>
         <div class="field">
           <label>Search</label>
           <input id="search" type="text" placeholder="Name…" />
@@ -581,8 +590,35 @@
           </div>
         </div>
         <div class="status" id="status">Loading…</div>
-        <div class="status">
-          <strong>Prices can change without notice.</strong>
+        <div class="status status-cta">
+          <strong>How to order</strong>
+          <p>
+            Reach out on
+            <a
+              href="https://www.instagram.com/the_kraken_vault/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram</a
+            >
+            or
+            <a
+              href="https://wa.me/917015350226"
+              target="_blank"
+              rel="noopener noreferrer"
+              >WhatsApp</a
+            >
+            to place an order.
+          </p>
+          <p>
+            Join our
+            <a
+              href="https://chat.whatsapp.com/JuTIn09PMvO3tYndhq9HWz"
+              target="_blank"
+              rel="noopener noreferrer"
+              >community</a
+            >
+            for news and offers.
+          </p>
         </div>
       </aside>
 
