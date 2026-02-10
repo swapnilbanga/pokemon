@@ -27,19 +27,20 @@
         background: #f5f7fa;
         color: #1a1a2e;
         line-height: 1.5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
       .banner {
         background: #fffbeb;
         color: #92400e;
-        padding: 0.6rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         border-bottom: 1px solid #fde68a;
-        font-size: 0.85rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        font-size: 0.9rem;
         text-align: center;
         font-weight: 500;
+        line-height: 1.4;
       }
 
       .banner a {
@@ -54,9 +55,35 @@
         opacity: 0.7;
       }
 
+      .footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.96);
+        border-top: 1px solid #e5e7eb;
+        backdrop-filter: blur(6px);
+      }
+
+      .footer a {
+        color: #d97706;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        transition: opacity 0.15s;
+      }
+
+      .footer a:hover {
+        opacity: 0.8;
+      }
+
       .layout {
         display: flex;
-        min-height: 100vh;
+        flex: 1;
       }
 
       .sidebar {
@@ -125,6 +152,7 @@
       .main {
         flex: 1;
         padding: 1.75rem;
+        padding-bottom: 4rem; /* keep content clear of fixed footer */
         overflow-y: auto;
         background: #f5f7fa;
       }
@@ -485,10 +513,28 @@
   </head>
   <body>
     <div class="banner">
-      Please read the&nbsp;
-      <a href="guidelines.html">ordering guidelines</a>&nbsp;before placing an
-      order.&nbsp;More about&nbsp;
-      <a href="about-scale-world.html">Bandai Scale World</a>.
+      Reach out to us on
+      <a
+        href="https://www.instagram.com/the_kraken_vault/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Instagram</a
+      >
+      or
+      <a
+        href="https://wa.me/917015350226"
+        target="_blank"
+        rel="noopener noreferrer"
+        >WhatsApp</a
+      >
+      to place an order. Join our
+      <a
+        href="https://chat.whatsapp.com/JuTIn09PMvO3tYndhq9HWz"
+        target="_blank"
+        rel="noopener noreferrer"
+        >community</a
+      >
+      for news and offers.
     </div>
     <div class="layout">
       <aside class="sidebar">
@@ -511,6 +557,29 @@
             <option value="desc">Price ↓</option>
           </select>
         </div>
+        <div class="field">
+          <label>Price range (₹)</label>
+          <div style="display: flex; gap: 0.35rem">
+            <input
+              id="minPrice"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100000"
+              placeholder="From"
+              style="flex: 1"
+            />
+            <input
+              id="maxPrice"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100000"
+              placeholder="To"
+              style="flex: 1"
+            />
+          </div>
+        </div>
         <div class="status" id="status">Loading…</div>
         <div class="status">
           <strong>Prices can change without notice.</strong>
@@ -521,6 +590,15 @@
         <div class="grid" id="grid"></div>
       </main>
     </div>
+
+    <footer class="footer">
+      <p>
+        Please read the
+        <a href="guidelines.html">ordering guidelines</a>
+        before placing an order. More about
+        <a href="about-scale-world.html">Bandai Scale World</a>.
+      </p>
+    </footer>
 
     <div class="lightbox" id="lightbox">
       <span class="lightbox-close">&times;</span>
@@ -551,7 +629,9 @@
         status = $("status");
       const searchEl = $("search"),
         regionEl = $("region"),
-        sortEl = $("sort");
+        sortEl = $("sort"),
+        minPriceEl = $("minPrice"),
+        maxPriceEl = $("maxPrice");
       const lightbox = $("lightbox"),
         lightboxImg = $("lightbox-img"),
         lightboxTitle = $("lightbox-title");
@@ -670,9 +750,43 @@
         const r = regionEl.value;
         const sortDir = sortEl.value;
 
+        const minRaw = minPriceEl.value.trim();
+        const maxRaw = maxPriceEl.value.trim();
+
+        let min = null;
+        let max = null;
+
+        if (minRaw !== "") {
+          const parsed = parseFloat(minRaw);
+          if (!isNaN(parsed)) {
+            min = Math.max(0, parsed);
+          }
+        }
+
+        if (maxRaw !== "") {
+          const parsed = parseFloat(maxRaw);
+          if (!isNaN(parsed)) {
+            max = Math.min(100000, parsed);
+          }
+        }
+
         filtered = allItems.filter(
-          (i) =>
-            (!q || i.name.toLowerCase().includes(q)) && (!r || i.region === r)
+          (i) => {
+            if (q && !i.name.toLowerCase().includes(q)) return false;
+            if (r && i.region !== r) return false;
+
+            const price = getLowestPrice(i);
+
+            // If no price data, only include when no price filter is set
+            if (price === null) {
+              return min === null && max === null;
+            }
+
+            if (min !== null && price < min) return false;
+            if (max !== null && price > max) return false;
+
+            return true;
+          }
         );
 
         if (sortDir) {
@@ -818,6 +932,8 @@
       searchEl.oninput = filter;
       regionEl.onchange = filter;
       sortEl.onchange = filter;
+      minPriceEl.oninput = filter;
+      maxPriceEl.oninput = filter;
       init();
     </script>
   </body>
