@@ -647,11 +647,10 @@
       const GID = "0";
       const COLS = {
         name: "Pokemon",
-        noBase: "No Base",
         loose: "Loose",
-        sealed: "Sealed (inner bag)",
-        boxOpened: "Box (opened)",
-        boxUnopened: "Box (unopened)",
+        newWithoutBox: "New, without box",
+        usedWithBox: "Used, with box",
+        newWithBox: "New, with box",
         notes: "Notes",
         reference: "Reference",
         region: "Region",
@@ -733,11 +732,10 @@
 
       function getLowestPrice(item) {
         const prices = [
-          item.noBase,
           item.loose,
-          item.sealed,
-          item.boxOpened,
-          item.boxUnopened,
+          item.newWithoutBox,
+          item.usedWithBox,
+          item.newWithBox,
         ]
           .map(parsePrice)
           .filter((p) => p !== null);
@@ -750,11 +748,10 @@
         return {
           number: itemNumber,
           name,
-          noBase: (row[COLS.noBase] || "").trim(),
           loose: (row[COLS.loose] || "").trim(),
-          sealed: (row[COLS.sealed] || "").trim(),
-          boxOpened: (row[COLS.boxOpened] || "").trim(),
-          boxUnopened: (row[COLS.boxUnopened] || "").trim(),
+          newWithoutBox: (row[COLS.newWithoutBox] || "").trim(),
+          usedWithBox: (row[COLS.usedWithBox] || "").trim(),
+          newWithBox: (row[COLS.newWithBox] || "").trim(),
           notes: (row[COLS.notes] || "").trim(),
           reference: (row[COLS.reference] || "").trim(),
           region: (row[COLS.region] || "").trim(),
@@ -861,34 +858,28 @@
 
       function renderCard(item) {
         const prices = [];
-        if (item.noBase)
-          prices.push(
-            `<span class="price-tag no-base"><b>No Base:</b> ${formatPrice(
-              item.noBase
-            )}</span>`
-          );
         if (item.loose)
           prices.push(
             `<span class="price-tag loose"><b>Loose:</b> ${formatPrice(
               item.loose
             )}</span>`
           );
-        if (item.sealed)
+        if (item.newWithoutBox)
           prices.push(
-            `<span class="price-tag sealed"><b>Sealed:</b> ${formatPrice(
-              item.sealed
+            `<span class="price-tag sealed"><b>New, without box:</b> ${formatPrice(
+              item.newWithoutBox
             )}</span>`
           );
-        if (item.boxOpened)
+        if (item.usedWithBox)
           prices.push(
-            `<span class="price-tag box-opened"><b>Box (opened):</b> ${formatPrice(
-              item.boxOpened
+            `<span class="price-tag box-opened"><b>Used, with box:</b> ${formatPrice(
+              item.usedWithBox
             )}</span>`
           );
-        if (item.boxUnopened)
+        if (item.newWithBox)
           prices.push(
-            `<span class="price-tag box-unopened"><b>Box (unopened):</b> ${formatPrice(
-              item.boxUnopened
+            `<span class="price-tag box-unopened"><b>New, with box:</b> ${formatPrice(
+              item.newWithBox
             )}</span>`
           );
 
