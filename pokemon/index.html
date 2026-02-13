@@ -649,8 +649,8 @@
         name: "Pokemon",
         loose: "Loose",
         newWithoutBox: "New, without box",
-        usedWithBox: "Used, with box",
-        newWithBox: "New, with box",
+        openedBox: "Opened box",
+        unopenedBox: "Unopened box",
         notes: "Notes",
         reference: "Reference",
         region: "Region",
@@ -734,8 +734,8 @@
         const prices = [
           item.loose,
           item.newWithoutBox,
-          item.usedWithBox,
-          item.newWithBox,
+          item.openedBox,
+          item.unopenedBox,
         ]
           .map(parsePrice)
           .filter((p) => p !== null);
@@ -750,8 +750,8 @@
           name,
           loose: (row[COLS.loose] || "").trim(),
           newWithoutBox: (row[COLS.newWithoutBox] || "").trim(),
-          usedWithBox: (row[COLS.usedWithBox] || "").trim(),
-          newWithBox: (row[COLS.newWithBox] || "").trim(),
+          openedBox: (row[COLS.openedBox] || "").trim(),
+          unopenedBox: (row[COLS.unopenedBox] || "").trim(),
           notes: (row[COLS.notes] || "").trim(),
           reference: (row[COLS.reference] || "").trim(),
           region: (row[COLS.region] || "").trim(),
@@ -870,16 +870,16 @@
               item.newWithoutBox
             )}</span>`
           );
-        if (item.usedWithBox)
+        if (item.openedBox)
           prices.push(
-            `<span class="price-tag box-opened"><b>Used, with box:</b> ${formatPrice(
-              item.usedWithBox
+            `<span class="price-tag box-opened"><b>Opened box:</b> ${formatPrice(
+              item.openedBox
             )}</span>`
           );
-        if (item.newWithBox)
+        if (item.unopenedBox)
           prices.push(
-            `<span class="price-tag box-unopened"><b>New, with box:</b> ${formatPrice(
-              item.newWithBox
+            `<span class="price-tag box-unopened"><b>Unopened box:</b> ${formatPrice(
+              item.unopenedBox
             )}</span>`
           );
 
